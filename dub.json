@@ -1,0 +1,10 @@
+{
+	"name": "e",
+	"authors": [
+		"burner"
+	],
+	"description": "The E Programming Language",
+	"copyright": "Copyright © 2016, burner",
+	"preBuildsCommands" : ["make"],
+	"license": "LGPL3"
+}
