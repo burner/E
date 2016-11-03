@@ -139,7 +139,10 @@ class Parser {
 	Array parseArrayImpl() {
 		if(this.lex.front.type == TokenType.lbrack) {
 			this.lex.popFront();
-			if(this.firstExpr()) {
+			if(this.lex.front.type == TokenType.rbrack) {
+				this.lex.popFront();
+				return new Array(ArrayEnum.Slice);
+			} else if(this.firstExpr()) {
 				Expr expr = this.parseExpr();
 				if(this.lex.front.type == TokenType.rbrack) {
 					this.lex.popFront();
@@ -147,7 +150,7 @@ class Parser {
 				}
 				throw new ParseException("Was expecting an rbrack.", this.lex.line, this.lex.column);
 			}
-			throw new ParseException("Was expecting an Expr.", this.lex.line, this.lex.column);
+			throw new ParseException("Was expecting an rbrack, or Expr.", this.lex.line, this.lex.column);
 		}
 		throw new ParseException("Was expecting an lbrack.", this.lex.line, this.lex.column);
 	}

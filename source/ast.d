@@ -130,12 +130,17 @@ class PostfixFollow {
 }
 
 enum ArrayEnum {
+	Slice,
 	Index,
 }
 
 class Array {
 	ArrayEnum ruleSelection;
 	Expr expr;
+
+	this(ArrayEnum ruleSelection) {
+		this.ruleSelection = ruleSelection;
+	}
 
 	this(ArrayEnum ruleSelection, Expr expr) {
 		this.ruleSelection = ruleSelection;

@@ -31,7 +31,7 @@ struct Lexer {
 			c == ' ' || c == '\t' || c == '\n' || c == ';' || c == '(' 
 			|| c == ')' || c == '{' || c == '}' || c == '&' || c == '!'
 			|| c == '=' || c == '|' || c == '.' || c == '*' || c == '/'
-			|| c == '%';
+			|| c == '%' || c == '[' || c == ']';
 	}
 
 	private void eatWhitespace() {
@@ -170,6 +170,24 @@ struct Lexer {
 		} else {
 			return false;
 		}
+	}
+
+	unittest {
+		import std.conv : to;
+
+		string testS = "hello[]";
+		auto l = Lexer(testS);
+		assert(!l.empty);
+		assert(l.front.type == TokenType.identifier);
+		assert(l.front.value == "hello", l.front.value);
+		l.popFront();
+		assert(!l.empty);
+		assert(l.front.type == TokenType.lbrack);
+		l.popFront();
+		assert(!l.empty);
+		assert(l.front.type == TokenType.rbrack);
+		l.popFront();
+		assert(l.empty);
 	}
 
 	unittest {

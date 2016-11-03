@@ -16,6 +16,7 @@ PostfixFollow:
     CallFollow: [Call#call, PostfixFollow#pffollow]
 
 Array:
+    Slice: [lbrack, rbrack]
     Index: [lbrack, Expr#expr, rbrack]
 
 Call:

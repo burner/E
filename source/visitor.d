@@ -113,6 +113,8 @@ class Visitor {
 
 	void accept(Array obj) {
 		final switch(obj.ruleSelection) {
+			case ArrayEnum.Slice:
+				break;
 			case ArrayEnum.Index:
 				obj.expr.visit(this);
 				break;
@@ -121,6 +123,8 @@ class Visitor {
 
 	void accept(const(Array) obj) {
 		final switch(obj.ruleSelection) {
+			case ArrayEnum.Slice:
+				break;
 			case ArrayEnum.Index:
 				obj.expr.visit(this);
 				break;
