@@ -50,7 +50,20 @@ AssignExpr:
 Stmt:
     ExprStmt: [AssignExpr#expr]
 
-Decl:
-    Var: [var, AssignExpr#assign, semicolon]
-    Type: [var, Type#type, AssignExpr#assign, semicolon]
+Stmts:
+    Stmt: [Stmt#stmt]
+    Stmts: [Stmt#stmt, Stmts#follow]
 
+Decl:
+    UnInit: [var, Type#type, identifier#ident, semicolon]
+    Init: [var, Type#type, identifier#ident, assign, Expr#expr, semicolon]
+
+BlockStmt:
+    Empty: [lcurly, rcurly]
+    Block: [lcurly, DeclStmts#declStmts, rcurly]
+
+DeclStmts:
+    Decl: [Decl#decl]
+    Decls: [Decl#decl, DeclStmts#follow]
+    Stmt: [Stmt#stmt]
+    Stmts: [Stmt#stmt, DeclStmts#follow]

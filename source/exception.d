@@ -24,4 +24,8 @@ class ParseException : Exception {
 		this.column = c;
 	}
 
+	override string toString() {
+		import std.format : format;
+		return format("%s at %d:%d", super.msg, this.line, this.column);
+	}
 }

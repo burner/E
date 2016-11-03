@@ -20,3 +20,12 @@ unittest {
 	}
 	}
 }
+
+unittest {
+	string s = "{ var i64 a; var f64 b = 13.37; }";
+		auto l = Lexer(s);
+		auto p = new Parser(l);
+		auto e = p.parseBlockStmt();
+		auto v = new Visitor();
+		v.accept(e);
+}
