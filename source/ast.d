@@ -48,12 +48,6 @@ class PostfixExpression {
 		this.expr = expr;
 	}
 
-	this(PostfixExpressionEnum ruleSelection, PrimaryExpression prim, Expression expr) {
-		this.ruleSelection = ruleSelection;
-		this.prim = prim;
-		this.expr = expr;
-	}
-
 	final void visit(Visitor vis) {
 		vis.accept(this);
 	}

@@ -78,8 +78,8 @@ class Parser {
 	}
 
 	bool firstPrimaryExpression() const {
-		return this.lex.first.type == TokenType.identifier
-			 || this.lex.first.type == TokenType.lparen;
+		return this.lex.front.type == TokenType.identifier
+			 || this.lex.front.type == TokenType.lparen;
 	}
 
 	PrimaryExpression parsePrimaryExpression() {
