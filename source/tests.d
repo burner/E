@@ -22,7 +22,7 @@ unittest {
 }
 
 unittest {
-	string s = "{ var i64 a; var f64 b = 13.37; }";
+	string s = "{ var i64 a; var f64 b = 13.37; var c = 1337; foo(); }";
 		auto l = Lexer(s);
 		auto p = new Parser(l);
 		auto e = p.parseBlockStmt();

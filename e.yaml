@@ -44,19 +44,17 @@ Type:
     F32: [f64#value]
 
 AssignExpr:
-    Expr: [Expr#expr]
-    Assign: [IdentifierList#ident, assign, Expr#expr]
+    Expr: [Expr#lhs]
+    Assign: [Expr#lhs, assign, Expr#rhs]
 
 Stmt:
-    ExprStmt: [AssignExpr#expr]
-
-Stmts:
-    Stmt: [Stmt#stmt]
-    Stmts: [Stmt#stmt, Stmts#follow]
+    ExprStmt: [AssignExpr#expr, semicolon]
 
 Decl:
-    UnInit: [var, Type#type, identifier#ident, semicolon]
-    Init: [var, Type#type, identifier#ident, assign, Expr#expr, semicolon]
+    UnInitType: [var, Type#type, identifier#ident, semicolon]
+    InitType: [var, Type#type, identifier#ident, assign, Expr#expr, semicolon]
+    UnInit: [var, identifier#ident, semicolon]
+    Init: [var, identifier#ident, assign, Expr#expr, semicolon]
 
 BlockStmt:
     Empty: [lcurly, rcurly]
