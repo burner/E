@@ -19,6 +19,7 @@ enum TokenType {
 	float64,
 	func,
 	forkeyword,
+	dot,
 }
 
 struct Token {

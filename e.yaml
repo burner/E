@@ -1,11 +1,30 @@
-Expression:
-    Postfix: [PostfixExpression#post]
+Expr:
+    PostfixExpr: [PostfixExpr#post]
 
-PostfixExpression:
-    Primary: [PrimaryExpression#prim]
-    Array: [PrimaryExpression#prim, lbrack, Expression#expr, rbrack]
-    Call: [PrimaryExpression#prim, lparen, Expression#expr, rparen]
+PostfixExpr:
+    Ident: [Identifier#ident]
+    Array: [Identifier#ident, PostfixFollow#follow]
+    Primary: [PrimaryExpr#prim]
 
-PrimaryExpression:
-    Identifier: [identifier#ident]
-    Parenthesis: [lparen, Expression#expr, rparen]
+PostfixFollow:
+    Dot: [dot, PostfixExpr#follow]
+    Array: [Array#array]
+    ArrayDot: [Array#array, dot, PostfixExpr#postfix]
+    ArrayFollow: [Array#array, PostfixFollow#pffollow]
+    Call: [Call#call]
+    CallDot: [Call#call, dot, PostfixExpr#follow]
+    CallFollow: [Call#call, PostfixFollow#pffollow]
+
+Array:
+    Index: [lbrack, Expr#expr, rbrack]
+
+Call:
+    Empty: [lparen, rparen]
+
+PrimaryExpr:
+    Float: [float64#value]
+    Integer: [integer#value]
+    Parenthesis: [lparen, Expr#expr, rparen]
+
+Identifier:
+    Ident: [identifier#value]

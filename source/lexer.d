@@ -87,6 +87,10 @@ struct Lexer {
 			this.cur = Token(TokenType.semicolon);
 			++this.column;
 			++this.stringPos;
+		} else if(this.input[this.stringPos] == '.') {
+			this.cur = Token(TokenType.dot);
+			++this.column;
+			++this.stringPos;
 		} else {
 			ulong b = this.stringPos;	
 			ulong e = this.stringPos;
