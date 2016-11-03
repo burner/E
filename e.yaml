@@ -21,11 +21,36 @@ Array:
 
 Call:
     Empty: [lparen, rparen]
+    Args: [lparen, ArgList#args, rparen]
+
+ArgList:
+    Arg: [Expr#arg]
+    Args: [Expr#arg, comma, ArgList#next]
 
 PrimaryExpr:
-    Float: [float64#value]
-    Integer: [integer#value]
+    Float: [f64value#value]
+    Integer: [i64value#value]
     Parenthesis: [lparen, Expr#expr, rparen]
 
 Identifier:
     Ident: [identifier#value]
+
+IdentifierList:
+    Ident: [Identifier#value]
+    IdentFollow: [Identifier#value, dot, IdentifierList#next]
+
+Type:
+    I32: [i64#value]
+    F32: [f64#value]
+
+AssignExpr:
+    Expr: [Expr#expr]
+    Assign: [IdentifierList#ident, assign, Expr#expr]
+
+Stmt:
+    ExprStmt: [AssignExpr#expr]
+
+Decl:
+    Var: [var, AssignExpr#assign, semicolon]
+    Type: [var, Type#type, AssignExpr#assign, semicolon]
+

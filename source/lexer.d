@@ -31,7 +31,7 @@ struct Lexer {
 			c == ' ' || c == '\t' || c == '\n' || c == ';' || c == '(' 
 			|| c == ')' || c == '{' || c == '}' || c == '&' || c == '!'
 			|| c == '=' || c == '|' || c == '.' || c == '*' || c == '/'
-			|| c == '%' || c == '[' || c == ']';
+			|| c == '%' || c == '[' || c == ']' || c == ',';
 	}
 
 	private void eatWhitespace() {
@@ -91,10 +91,31 @@ struct Lexer {
 			this.cur = Token(TokenType.dot);
 			++this.column;
 			++this.stringPos;
+		} else if(this.input[this.stringPos] == ',') {
+			this.cur = Token(TokenType.comma);
+			++this.column;
+			++this.stringPos;
+		} else if(this.input[this.stringPos] == '=') {
+			this.cur = Token(TokenType.assign);
+			++this.column;
+			++this.stringPos;
 		} else {
 			ulong b = this.stringPos;	
 			ulong e = this.stringPos;
 			switch(this.input[this.stringPos]) {
+				case 'i':
+					++this.stringPos;
+					++this.column;
+					++e;
+					if(this.testCharAndInc('6', e)) {
+						if(this.testCharAndInc('4', e)) {
+							if(this.isTokenStop()) {
+								this.cur = Token(TokenType.i64);
+								return;
+							}
+						}
+					}
+					goto default;
 				case 'f':
 					++this.stringPos;
 					++this.column;
@@ -116,6 +137,26 @@ struct Lexer {
 								return;
 							}
 						}
+					} else if(this.testCharAndInc('6', e)) {
+						if(this.testCharAndInc('4', e)) {
+							if(this.isTokenStop()) {
+								this.cur = Token(TokenType.f64);
+								return;
+							}
+						}
+					}
+					goto default;
+				case 'v':
+					++this.stringPos;
+					++this.column;
+					++e;
+					if(this.testCharAndInc('a', e)) {
+						if(this.testCharAndInc('r', e)) {
+							if(this.isTokenStop()) {
+								this.cur = Token(TokenType.var);
+								return;
+							}
+						}
 					}
 					goto default;
 				case '0': .. case '9':
@@ -130,7 +171,7 @@ struct Lexer {
 					if(this.stringPos >= this.input.length
 							|| this.input[this.stringPos] != '.') 
 					{
-						this.cur = Token(TokenType.integer, this.input[b .. e]);
+						this.cur = Token(TokenType.i64value, this.input[b .. e]);
 						return;
 					} else if(this.stringPos < this.input.length
 							&& this.input[this.stringPos] == '.')
@@ -143,7 +184,7 @@ struct Lexer {
 								&& this.input[this.stringPos] >= '0'
 								&& this.input[this.stringPos] <= '9');
 
-						this.cur = Token(TokenType.float64, this.input[b ..  e]);
+						this.cur = Token(TokenType.f64value, this.input[b ..  e]);
 						return;
 					}
 					goto default;
@@ -170,6 +211,23 @@ struct Lexer {
 		} else {
 			return false;
 		}
+	}
+
+	unittest {
+		import std.conv : to;
+
+		string testS = "i64,f64";
+		auto l = Lexer(testS);
+		assert(!l.empty);
+		assert(l.front.type == TokenType.i64, to!string(l.front.type));
+		l.popFront();
+		assert(!l.empty);
+		assert(l.front.type == TokenType.comma);
+		l.popFront();
+		assert(!l.empty);
+		assert(l.front.type == TokenType.f64);
+		l.popFront();
+		assert(l.empty);
 	}
 
 	unittest {
@@ -234,14 +292,14 @@ struct Lexer {
 		assert(l.front.type == TokenType.semicolon);
 		l.popFront();
 		assert(!l.empty);
-		assert(l.front.type == TokenType.integer);
+		assert(l.front.type == TokenType.i64value);
 		assert(l.front.value == "1337");
 		l.popFront();
 		assert(!l.empty);
 		assert(l.front.type == TokenType.semicolon);
 		l.popFront();
 		assert(!l.empty);
-		assert(l.front.type == TokenType.float64);
+		assert(l.front.type == TokenType.f64value, to!string(l.front.type));
 		assert(l.front.value == "13.37");
 		l.popFront();
 		assert(l.empty);

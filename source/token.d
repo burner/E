@@ -15,11 +15,15 @@ enum TokenType {
 	rcurly,
 	identifier,
 	semicolon,
-	integer,
-	float64,
+	i64,
+	f64,
+	i64value,
+	f64value,
 	func,
 	forkeyword,
 	dot,
+	comma,
+	var,
 }
 
 struct Token {
