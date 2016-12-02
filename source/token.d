@@ -19,11 +19,11 @@ enum TokenType {
 	f64,
 	i64value,
 	f64value,
-	func,
 	forkeyword,
 	dot,
 	comma,
 	var,
+	fun,
 }
 
 struct Token {

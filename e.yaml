@@ -50,13 +50,23 @@ AssignExpr:
 Stmt:
     ExprStmt: [AssignExpr#expr, semicolon]
 
-Decl:
-    UnInitType: [var, Type#type, identifier#ident, semicolon]
-    InitType: [var, Type#type, identifier#ident, assign, Expr#expr, semicolon]
-    UnInit: [var, identifier#ident, semicolon]
-    Init: [var, identifier#ident, assign, Expr#expr, semicolon]
+Var:
+    Var: [var, identifier#ident]
+    VarType: [var, Type#type, identifier#ident]
 
-BlockStmt:
+Decl:
+    Var: [Var#var, semicolon]
+    VarInit: [Var#var, assign, Expr#expr, semicolon]
+
+Fun:
+    Fun: [fun, Type#retType, identifier#name, lparen, rparen, BlockStmt#blockStmt]
+    FunParas: [fun, Type#retType, identifier#name, lparen, ParaList#paras, rparen, BlockStmt#blockStmt]
+
+ParaList:
+    Para: [Var#var]
+    Paras: [Var#var, comma, ParaList#next]
+
+BlockStm:
     Empty: [lcurly, rcurly]
     Block: [lcurly, DeclStmts#declStmts, rcurly]
 

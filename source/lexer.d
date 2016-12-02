@@ -122,11 +122,9 @@ struct Lexer {
 					++e;
 					if(this.testCharAndInc('u', e)) {
 						if(this.testCharAndInc('n', e)) {
-							if(this.testCharAndInc('c', e)) {
-								if(this.isTokenStop()) {
-									this.cur = Token(TokenType.func);
-									return;
-								}
+							if(this.isTokenStop()) {
+								this.cur = Token(TokenType.fun);
+								return;
 							}
 						}
 						goto default;
