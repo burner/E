@@ -249,7 +249,7 @@ struct Lexer {
 	unittest {
 		import std.conv : to;
 
-		string testS = "(){}iden;func(for)formost;1337;13.37";
+		string testS = "(){}iden;fun(for)formost;1337;13.37";
 		auto l = Lexer(testS);
 		assert(!l.empty);
 		assert(l.front.type == TokenType.lparen);
@@ -271,7 +271,7 @@ struct Lexer {
 		assert(l.front.type == TokenType.semicolon);
 		l.popFront();
 		assert(!l.empty);
-		assert(l.front.type == TokenType.func, to!string(l.front.type));
+		assert(l.front.type == TokenType.fun, to!string(l.front.type));
 		l.popFront();
 		assert(!l.empty);
 		assert(l.front.type == TokenType.lparen);

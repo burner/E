@@ -23,9 +23,18 @@ unittest {
 
 unittest {
 	string s = "{ var i64 a; var f64 b = 13.37; var c = 1337; foo(); }";
-		auto l = Lexer(s);
-		auto p = new Parser(l);
-		auto e = p.parseBlockStmt();
-		auto v = new Visitor();
-		v.accept(e);
+	auto l = Lexer(s);
+	auto p = new Parser(l);
+	auto e = p.parseBlockStmt();
+	auto v = new Visitor();
+	v.accept(e);
+}
+
+unittest {
+	string s = "fun i64 name() { var i64 a; var f64 b = 13.37; var c = 1337; foo(); }";
+	auto l = Lexer(s);
+	auto p = new Parser(l);
+	auto e = p.parseFun();
+	auto v = new Visitor();
+	v.accept(e);
 }

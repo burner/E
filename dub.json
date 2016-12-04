@@ -6,6 +6,9 @@
 	"description": "The E Programming Language",
 	"copyright": "Copyright © 2016, burner",
 	"preBuildsCommands" : ["make"],
+	"dependencies" : {
+		"llvm-d": "~>1.1.0"
+	},
 
 	"license": "LGPL3"
 }

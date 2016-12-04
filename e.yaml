@@ -40,6 +40,11 @@ IdentifierList:
     IdentFollow: [Identifier#value, dot, IdentifierList#next]
 
 Type:
+    BasicType: [BasicType#basicType]
+    Array: [BasicType#basicType, lbrack, rbrack]
+    ArrayStatic: [BasicType#basicType, lbrack, i64value#size, rbrack]
+
+BasicType:
     I32: [i64#value]
     F32: [f64#value]
 
@@ -66,7 +71,7 @@ ParaList:
     Para: [Var#var]
     Paras: [Var#var, comma, ParaList#next]
 
-BlockStm:
+BlockStmt:
     Empty: [lcurly, rcurly]
     Block: [lcurly, DeclStmts#declStmts, rcurly]
 
