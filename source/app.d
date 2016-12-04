@@ -23,10 +23,8 @@ void main(string[] args) {
 	PrimaryExpr e = p.parsePrimaryExpr();
 
 	auto llvmVis = new LLVMVisitor();
-	writeln("eighteen");
 	e.visit(llvmVis);
-	writeln("nineteen");
 	char* str = LLVMPrintValueToString(llvmVis.value);
 	assert(str !is null);
-	writeln("foo ", fromStringz(str));
+	writeln("IR ", fromStringz(str));
 }
